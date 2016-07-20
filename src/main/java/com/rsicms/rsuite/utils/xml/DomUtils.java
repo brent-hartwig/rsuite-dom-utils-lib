@@ -31,6 +31,9 @@ import org.xml.sax.SAXException;
 import com.reallysi.rsuite.api.RSuiteException;
 import com.reallysi.rsuite.api.extensions.ExecutionContext;
 
+/**
+ * A collection of static DOM utility methods.
+ */
 public class DomUtils {
 
   @SuppressWarnings("unused")
@@ -101,14 +104,15 @@ public class DomUtils {
   }
 
   /**
-   * Convert a <code>Document<code> to a string, which can be helpful for debugging purposes.
+   * Convert a <code>Document</code> to a string, which can be helpful for debugging purposes.
    * <p>
-   * The XML declaration is included in the response by default.  To override, submit true
-   * into {@link #toString(Document, boolean)}.
+   * The XML declaration is included in the response by default. To override, submit true into
+   * {@link #toString(Document, boolean)}.
    * <p>
    * Credit: http://stackoverflow.com/questions/2567416/document-to-string
    * 
-   * &#64;param doc
+   * @param doc
+   * 
    * @return String representation of <code>Document</code>
    */
   public static String toString(Document doc) {
@@ -116,12 +120,13 @@ public class DomUtils {
   }
 
   /**
-   * Convert a <code>Document<code> to a string, which can be helpful for debugging purposes.
+   * Convert a <code>Document</code> to a string, which can be helpful for debugging purposes.
    * <p>
    * Credit: http://stackoverflow.com/questions/2567416/document-to-string
    * 
-   * &#64;param doc
-   * &#64;param omitXmlDeclaration Submit true to exclude the XML declaration.
+   * @param doc
+   * @param omitXmlDeclaration Submit true to exclude the XML declaration.
+   * 
    * @return String representation of <code>Document</code>
    */
   public static String toString(Document doc, boolean omitXmlDeclaration) {
