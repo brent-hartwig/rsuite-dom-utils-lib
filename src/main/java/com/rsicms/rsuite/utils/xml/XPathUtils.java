@@ -4,9 +4,10 @@ import com.reallysi.rsuite.api.RSuiteException;
 import com.reallysi.rsuite.api.extensions.ExecutionContext;
 import com.reallysi.rsuite.api.xml.Namespace;
 import com.reallysi.rsuite.api.xml.XPathEvaluator;
+import com.reallysi.rsuite.service.XmlApiManager;
 
 /**
- * A collection of static XPath utility methods.
+ * A collection of XPath utility methods.
  */
 public class XPathUtils {
 
@@ -19,19 +20,19 @@ public class XPathUtils {
    * @throws RSuiteException
    */
   public static XPathEvaluator getXPathEvaluator(ExecutionContext context) throws RSuiteException {
-    return getXPathEvaluator(context.getXmlApiManager().getXPathEvaluator());
+    return new XPathUtils().getXPathEvaluator(context.getXmlApiManager());
   }
 
   /**
    * Get an XPath evaluator, without additional namespaces
    * 
-   * @param eval
+   * @param xmlApiManager
    * @return XPath evaluator
    * @throws RSuiteException
    */
-  public static XPathEvaluator getXPathEvaluator(XPathEvaluator eval) throws RSuiteException {
+  public XPathEvaluator getXPathEvaluator(XmlApiManager xmlApiManager) throws RSuiteException {
     Namespace namespace[] = null;
-    return getXPathEvaluator(eval, namespace);
+    return getXPathEvaluator(xmlApiManager, namespace);
   }
 
   /**
@@ -45,19 +46,20 @@ public class XPathUtils {
    */
   public static XPathEvaluator getXPathEvaluator(ExecutionContext context, Namespace... namespaces)
       throws RSuiteException {
-    return getXPathEvaluator(context.getXmlApiManager().getXPathEvaluator(), namespaces);
+    return new XPathUtils().getXPathEvaluator(context.getXmlApiManager(), namespaces);
   }
 
   /**
    * Get an XPath evaluator, configured with the specified namespace.
    * 
-   * @param eval
+   * @param xmlApiManager
    * @param namespaces Optional list of namespace to configure evaluator with.
    * @return XPath evaluator, configured with the specified namespace
    * @throws RSuiteException
    */
-  public static XPathEvaluator getXPathEvaluator(XPathEvaluator eval, Namespace... namespaces)
+  public XPathEvaluator getXPathEvaluator(XmlApiManager xmlApiManager, Namespace... namespaces)
       throws RSuiteException {
+    XPathEvaluator eval = xmlApiManager.getXPathEvaluator();
     if (namespaces != null) {
       for (Namespace namespace : namespaces) {
         if (namespace != null)
