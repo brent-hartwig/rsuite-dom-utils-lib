@@ -1,5 +1,7 @@
 package com.rsicms.rsuite.utils.xml;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,13 +11,18 @@ import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -69,6 +76,32 @@ public class DomUtils {
   public static Document getDocument(ExecutionContext context, InputStream inputStream)
       throws SAXException, IOException {
     return context.getXmlApiManager().constructNonValidatingDocumentBuilder().parse(inputStream);
+  }
+
+  /**
+   * Get an <code>InputStream</code> for a <code>Document</code>.
+   * <p>
+   * Credit to
+   * http://stackoverflow.com/questions/865039/how-to-create-an-inputstream-from-a-document-or-node
+   * 
+   * @param doc
+   * @return An input stream, of the given document.
+   * @throws TransformerConfigurationException
+   * @throws TransformerException
+   * @throws TransformerFactoryConfigurationError
+   */
+  public static InputStream getInputStream(Document doc) throws TransformerConfigurationException,
+      TransformerException, TransformerFactoryConfigurationError {
+    ByteArrayOutputStream outputStream = null;
+    try {
+      outputStream = new ByteArrayOutputStream();
+      Source xmlSource = new DOMSource(doc);
+      Result outputTarget = new StreamResult(outputStream);
+      TransformerFactory.newInstance().newTransformer().transform(xmlSource, outputTarget);
+      return new ByteArrayInputStream(outputStream.toByteArray());
+    } finally {
+      IOUtils.closeQuietly(outputStream);
+    }
   }
 
   /**
