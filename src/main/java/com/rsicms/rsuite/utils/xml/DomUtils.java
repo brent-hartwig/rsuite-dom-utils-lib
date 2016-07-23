@@ -37,6 +37,7 @@ import org.xml.sax.SAXException;
 
 import com.reallysi.rsuite.api.RSuiteException;
 import com.reallysi.rsuite.api.extensions.ExecutionContext;
+import com.reallysi.rsuite.service.XmlApiManager;
 
 /**
  * A collection of static DOM utility methods.
@@ -76,6 +77,20 @@ public class DomUtils {
   public static Document getDocument(ExecutionContext context, InputStream inputStream)
       throws SAXException, IOException {
     return context.getXmlApiManager().constructNonValidatingDocumentBuilder().parse(inputStream);
+  }
+
+  /**
+   * Get a <code>Document</code> from a <code>File</code>.
+   * 
+   * @param xmlApiManager
+   * @param file
+   * @return Document
+   * @throws SAXException
+   * @throws IOException
+   */
+  public Document getDocument(XmlApiManager xmlApiManager, File file)
+      throws SAXException, IOException {
+    return xmlApiManager.constructNonValidatingDocumentBuilder().parse(file);
   }
 
   /**
