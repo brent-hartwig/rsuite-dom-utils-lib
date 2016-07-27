@@ -40,7 +40,9 @@ import com.reallysi.rsuite.api.extensions.ExecutionContext;
 import com.reallysi.rsuite.service.XmlApiManager;
 
 /**
- * A collection of static DOM utility methods.
+ * A collection of DOM utility methods. This class has started to undergo a change from only
+ * defining static methods to also defining instance methods, in order to make it easier to test
+ * code that uses this class.
  */
 public class DomUtils {
 
