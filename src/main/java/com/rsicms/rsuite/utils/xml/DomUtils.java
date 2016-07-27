@@ -102,12 +102,30 @@ public class DomUtils {
    * http://stackoverflow.com/questions/865039/how-to-create-an-inputstream-from-a-document-or-node
    * 
    * @param doc
+   * @deprecated Use {@link #iGetInputStream(Document)}.
    * @return An input stream, of the given document.
    * @throws TransformerConfigurationException
    * @throws TransformerException
    * @throws TransformerFactoryConfigurationError
    */
   public static InputStream getInputStream(Document doc) throws TransformerConfigurationException,
+      TransformerException, TransformerFactoryConfigurationError {
+    return new DomUtils().iGetInputStream(doc);
+  }
+
+  /**
+   * Get an <code>InputStream</code> for a <code>Document</code>.
+   * <p>
+   * Credit to
+   * http://stackoverflow.com/questions/865039/how-to-create-an-inputstream-from-a-document-or-node
+   * 
+   * @param doc
+   * @return An input stream, of the given document.
+   * @throws TransformerConfigurationException
+   * @throws TransformerException
+   * @throws TransformerFactoryConfigurationError
+   */
+  public InputStream iGetInputStream(Document doc) throws TransformerConfigurationException,
       TransformerException, TransformerFactoryConfigurationError {
     ByteArrayOutputStream outputStream = null;
     try {
